@@ -18,6 +18,8 @@ build_nmap() {
     fetch "https://github.com/nmap/nmap.git" "${BUILD_DIRECTORY}/nmap" git
     cd "${BUILD_DIRECTORY}/nmap"
     git clean -fdx || true
+    # TODO: Remove this line; temporary workaround bug introduced in recent commit
+    git checkout 99c9e776c8f9e6761ab4df9a3f815bc60c6f3ed3
     # make sure we only build the static libraries
     sed -i '/build-zlib: $(ZLIBDIR)\/Makefile/!b;n;c\\t@echo Compiling zlib; cd $(ZLIBDIR) && $(MAKE) static;' "${BUILD_DIRECTORY}/nmap/Makefile.in"
     CC='gcc -static -fPIC' \
